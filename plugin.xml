@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-x-alipay"
+    version="1.0.0">
+    <name>cordova-plugin-x-alipay</name>
+
+    <preference name="ALIAPPID" />
+    <js-module name="xAlipay" src="www/cordova-plugin-x-alipay.js">
+        <clobbers target="xAlipay" />
+    </js-module>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="XAlipay">
+                <param name="android-package" value="daihere.cordova.plugin.XAlipay" />
+            </feature>
+        </config-file>
+
+        <config-file target="Android  Manifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        </config-file>
+
+        <!-- plugin source code -->
+        <source-file src="src/android/XAlipay.java" target-dir="src/daihere/cordova/plugin" />
+        <source-file src="src/android/PayResult.java" target-dir="src/daihere/cordova/plugin" />
+
+        <!-- Alipay libs -->
+        <source-file src="src/android/libs/alipaySDK.jar" target-dir="libs" />
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="XAlipay">
+                <param name="ios-package" value="CDVXAlipay" />
+                <param name="onload" value="true" />
+            </feature>
+            <preference name="ALIAPPID" value="$ALIAPPID" />
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+            <array>
+                <dict>
+                    <key>CFBundleURLName</key>
+                    <string>alipay</string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>ali$ALIAPPID</string>
+                    </array>
+                </dict>
+            </array>
+        </config-file>
+
+        <!-- plugin source code -->
+        <header-file src="src/ios/CDVXAlipay.h" />
+        <source-file src="src/ios/CDVXAlipay.m" />
+
+        <!-- Alipay libs -->
+        <framework src="src/ios/libs/AlipaySDK.framework" custom="true" />
+        <resource-file src="src/ios/libs/AlipaySDK.bundle" />
+
+        <!-- Other required frameworks -->
+        <framework src="libz.dylib" />
+        <framework src="libsqlite3.0.dylib" />
+        <framework src="SystemConfiguration.framework" weak="true" />
+        <framework src="libstdc++.6.dylib" />
+        <framework src="libc++.tbd" weak="true" />
+        <framework src="CFNetwork.framework" weak="true" />
+        <framework src="CoreMotion.framework" weak="true" />
+        <framework src="Security.framework" weak="true" />
+        <framework src="CoreTelephony.framework" weak="true" />
+    </platform>
+</plugin>
