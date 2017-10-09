@@ -5,8 +5,6 @@
 
 -  Ali payment for app.
 
-# Example
-wait
 # Install
 ```bash
 cordova plugin add cordova-plugin-x-alipay --variable --variable aliappid=YOUT_ALIPAYAPPID
