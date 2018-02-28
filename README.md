@@ -7,13 +7,13 @@
 
 # Install
 ```bash
-cordova plugin add cordova-plugin-x-alipay --variable --variable aliappid=YOUT_ALIPAYAPPID
+cordova plugin add cordova-plugin-x-alipay --variable aliappid=YOUT_ALIPAYAPPID
 ```
 
 or
 
 ```bash
-ionic plugin add cordova-plugin-x-alipay --variable --variable aliappid=YOUT_ALIPAYAPPID
+ionic plugin add cordova-plugin-x-alipay --variable aliappid=YOUT_ALIPAYAPPID
 ```
 
 # Usage
