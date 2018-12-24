@@ -4,6 +4,34 @@
 
 #pragma mark "API"
 
+static CDVXAlipay *_sharedInstance = nil;
+
+- (void)pluginInitialize {
+    _sharedInstance = self;
+}
+
+- (void)initPlugin:(CDVInvokedUrlCommand *)command {
+    _eventCallbackID = command.callbackId;
+}
+
+/**
+ *  Notify JavaScript module about occured event.
+ *  For that we will use callback, received on plugin initialization stage.
+ *
+ *  @param result message to send to web side
+ *  @return YES - result was sent to the web page; NO - otherwise
+ */
+- (BOOL)invokeDefaultCallbackWithMessage:(CDVPluginResult *)result {
+    if (_eventCallbackID != nil && result != nil) {
+        [result setKeepCallbackAsBool:YES];
+        [self.commandDelegate sendPluginResult:result callbackId:_eventCallbackID];
+        return YES;
+    }
+    return NO;
+}
+
+
+
 - (void)aliPayment:(CDVInvokedUrlCommand *)command {
     self.currentCallbackId = command.callbackId;
     NSDictionary *params = [command.arguments objectAtIndex:0];
@@ -29,7 +57,7 @@
     NSURL *url =[notification object];
     NSString *schemeStr;
     schemeStr = [@"ali" stringByAppendingString:[[self.commandDelegate settings] objectForKey:@"aliappid"]];
-
+    
     if ([url isKindOfClass:[NSURL class]] && [url.scheme isEqualToString:schemeStr]) {
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
             
@@ -64,6 +92,11 @@
 - (void)failWithCallbackID:(NSString *)callbackID withMessage:(NSString *)message {
     CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:message];
     [self.commandDelegate sendPluginResult:commandResult callbackId:callbackID];
+}
+
++ (CDVXAlipay *)sharedManager
+{
+    return _sharedInstance;
 }
 
 @end
