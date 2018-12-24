@@ -29,6 +29,20 @@ xAlipay(params, function() {
     console.log(error);
 });
 ```
+
+# Events
+
+- `XAlipay_StandbyCallback_Success` for iOS only. Will call when app launch alipay and self been killed. [More Info](https://docs.open.alipay.com/204/105295/#s8)
+- `XAlipay_StandbyCallback_Error` for iOS only. Will call when app launch alipay and self been killed. [More Info](https://docs.open.alipay.com/204/105295/#s8)
+
+## Example
+
+```
+document.addEventListener('XAlipay_StandbyCallback_Success', function(event){
+    alert(event);
+}, false);
+```
+
 # LICENSE
 
 [MIT LICENSE](http://opensource.org/licenses/MIT)
